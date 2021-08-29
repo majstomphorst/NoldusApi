@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: noldus_postgres_container
+    image: postgres
+    environment:
+      POSTGRES_DB: api_data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  adminer:
+    container_name: noldus_adminer_container
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
