@@ -65,9 +65,9 @@ namespace NoldusApi.Middleware
             {
                 var body = await ReadSteamToString(context);
                 var author = JsonConvert.DeserializeObject<AuthorWriteDto>(body);
-                if (author.Pseudonym != null)
-                {               
-                    if (author.Pseudonym.ToLower() == "dark father")
+                if (author.FirstName != null && author.LastName != null)
+                {
+                    if (author.FirstName.ToLower() == "dark" && author.LastName.ToLower() == "father")
                     {
                         context.Response.StatusCode = 403;
                         return;
