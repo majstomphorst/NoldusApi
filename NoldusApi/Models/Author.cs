@@ -20,7 +20,6 @@ namespace NoldusApi.Models
         
         public string Pseudonym { get; set; }
         
-        
         public ICollection<Book> Books { get; set; } 
     }
 }

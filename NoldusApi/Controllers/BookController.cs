@@ -40,7 +40,7 @@ namespace NoldusApi.Controllers
         
         //POST api/book
         [HttpPost]
-        public  ActionResult<AuthorReadDto> PostBook(BookWriteDto bookDto)
+        public ActionResult<AuthorReadDto> PostBook(BookWriteDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
 
