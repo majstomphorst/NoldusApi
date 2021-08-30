@@ -35,17 +35,6 @@ namespace NoldusApi.Controllers
                 return NotFound();
             }
 
-            if (!withBooks)
-            {
-                return Ok(_mapper.Map<AuthorReadDto>(author));
-            }
-
-            if (author.Pseudonym.ToLower() is "drokkattta" or "grakchawwaa")
-            {
-                var sorted = author.Books.Where(x => x.Release < DateTime.Now.AddMonths(-24)).ToList();
-                author.Books = sorted;
-            }
-
             return Ok(_mapper.Map<AuthorReadDto>(author));
         }
         

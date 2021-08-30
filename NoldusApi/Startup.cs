@@ -13,24 +13,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using NoldusApi.DataAccess;
-using NoldusApi.Middleware;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+
 
 namespace NoldusApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Env = env;
         }
-
-        public IHostingEnvironment Env { get; set; }
 
         public IConfiguration Configuration { get; }
 
@@ -85,8 +80,6 @@ namespace NoldusApi
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"AppData")),
                 RequestPath = "/AppData"
             });
-
-            app.UseMiddleware<DarthFatherMiddleware>();
             
             app.UseAuthorization();
 

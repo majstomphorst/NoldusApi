@@ -21,6 +21,23 @@ namespace NoldusApi.DataAccess
             return books;
         }
 
+        public IEnumerable<Book> GetAllBooksWithAuthor()
+        {
+            var books = _context.Book.Include(x => x.Author).ToList();
+
+            // this also does not belong there right?
+            return books.Where(book =>
+            {
+                if (book.Author.Pseudonym.ToLower() is "drokkattta" or "grakchawwaa" && 
+                    book.Release < DateTime.Now.AddMonths(-24))
+                {
+                    return false;
+                }
+                return true;
+            });
+        }
+
+
         public Book GetBookById(int id)
         {
             var book = _context.Book.FirstOrDefault(x => x.Id == id);
@@ -32,6 +49,7 @@ namespace NoldusApi.DataAccess
             var book = _context.Book
                 .Include(x => x.Author)
                 .FirstOrDefault(x => x.Id == id);
+
             return book;
         }
 
