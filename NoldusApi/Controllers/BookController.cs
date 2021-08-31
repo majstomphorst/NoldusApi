@@ -7,6 +7,7 @@ using NoldusApi.DataAccess;
 using NoldusApi.Dtos;
 using NoldusApi.Dtos.BookDtos;
 using NoldusApi.Models;
+using NoldusApi.Services;
 
 namespace NoldusApi.Controllers
 {
@@ -17,9 +18,11 @@ namespace NoldusApi.Controllers
         private readonly IBookRepo _bookRepo;
         private readonly IAuthorRepo _authorRepo;
         private readonly IMapper _mapper;
+        private readonly BookService _bookService;
 
-        public BookController(IBookRepo bookRepo, IAuthorRepo authorRepo, IMapper mapper)
+        public BookController(BookService bookService, IBookRepo bookRepo, IAuthorRepo authorRepo, IMapper mapper)
         {
+            _bookService = bookService;
             _bookRepo = bookRepo;
             _authorRepo = authorRepo;
             _mapper = mapper;
@@ -27,15 +30,16 @@ namespace NoldusApi.Controllers
         
         //GET api/book/{id}
         [HttpGet("{id}", Name="GetBookById")]
-        public ActionResult<BookReadDto> GetBookById(int id, bool withBooks=false)
+        public async  Task<ActionResult<BookReadDto>> GetBookById(int id, bool includeBook=false)
         {
-            Book author = withBooks ? _bookRepo.GetBookByIdWithFirstRelation(id) : _bookRepo.GetBookById(id);
+            var book = await _bookService.GetBookById(id, includeBook);
             
-            if(author != null)
+            if(book == null)
             {
-                return Ok(_mapper.Map<BookReadDto>(author));
+                return NotFound();
             }
-            return NotFound();
+            
+            return Ok(_mapper.Map<BookReadDto>(book));
         }
         
         //POST api/book

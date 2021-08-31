@@ -25,6 +25,12 @@ namespace NoldusApi.Services
             return books;
         }
 
+        public async Task<Book> GetBookById(int id, bool includeAuthor = false)
+        {
+            Book author = includeAuthor ? _bookRepo.GetBookByIdWithFirstRelation(id) : _bookRepo.GetBookById(id);
+            return author;
+        }
+
         public async Task<IEnumerable<Book>> GetAllBooksWithAuthor()
         {
             var books = _bookRepo.GetAllBooksWithAuthor();

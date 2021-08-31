@@ -51,8 +51,7 @@ namespace NoldusApi.Controllers
             }
             
             _authorService.CreateAuthors(authors);
-
-
+            
             var authorsReadDto = _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
             return Created("",authorsReadDto);
         }
