@@ -4,6 +4,7 @@ using Xunit;
 
 namespace TestNoldusApi.UnitTests
 {
+    [Collection("Sequential")]
     public class AuthorRepoTests : BaseRepoTests
     {
         [Fact]
@@ -30,7 +31,7 @@ namespace TestNoldusApi.UnitTests
 
             Assert.NotNull(author);
             Assert.NotNull(author.Books);
-            Assert.Single(author.Books);
+            Assert.Equal(4,author.Books.Count());
         }
 
         [Fact]
@@ -54,19 +55,6 @@ namespace TestNoldusApi.UnitTests
 
             Assert.Single(piet);
             Assert.Equal("the last", piet.First().LastName);
-        }
-
-        [Fact]
-        public void CreateAuthor_fail_DarkFather()
-        {
-            var newAuthor = new Author {FirstName = "Dark", LastName = "Father", Pseudonym = "", Books = null};
-            
-            _authorRepo.CreateAuthor(newAuthor);
-            _authorRepo.SaveChanges();
-
-            var vader = _context.Authors.Where(x => x.FirstName == "Dark" && x.LastName == "Father");
-
-            Assert.Empty(vader);
         }
 
         [Fact]

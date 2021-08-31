@@ -80,8 +80,7 @@ namespace TestNoldusApi.UnitTests
                 new Book { Id = 4, Title = "title 4", Description = "", CoverImage = null, Release = DateTime.Now, Price = 0, AuthorId = 2},
                 new Book { Id = 5, Title = "title 5", Description = "", CoverImage = null, Release = DateTime.Now, Price = 0, AuthorId = 3},
                 new Book { Id = 6, Title = "title 6", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-25), Price = 0, AuthorId = 3},
-                
-                
+
                 new Book { Id = 7, Title = "title 7", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-25), Price = 0, AuthorId = 5},
                 new Book { Id = 8, Title = "title 8", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-26), Price = 0, AuthorId = 5},
                 new Book { Id = 9, Title = "title 9", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-24), Price = 0, AuthorId = 5},
