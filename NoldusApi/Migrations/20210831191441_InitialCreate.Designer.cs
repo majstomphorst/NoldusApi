@@ -10,15 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoldusApi.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20210828152057_CreateAuthersAndBooksTables")]
-    partial class CreateAuthersAndBooksTables
+    [Migration("20210831191441_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("NoldusApi.Models.Author", b =>
@@ -79,13 +79,11 @@ namespace NoldusApi.Migrations
 
             modelBuilder.Entity("NoldusApi.Models.Book", b =>
                 {
-                    b.HasOne("NoldusApi.Models.Author", "Author")
+                    b.HasOne("NoldusApi.Models.Author", null)
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("NoldusApi.Models.Author", b =>
