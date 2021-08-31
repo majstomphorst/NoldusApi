@@ -105,7 +105,7 @@ namespace NoldusApi.Controllers
                 return NotFound();
             }
 
-            if (!_authorService.AuthorCanBeRemoved(author))
+            if (_authorService.AuthorCanBeRemoved(author))
             {
                 return BadRequest();
             }
