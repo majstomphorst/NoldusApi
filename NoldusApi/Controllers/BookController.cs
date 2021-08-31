@@ -55,35 +55,11 @@ namespace NoldusApi.Controllers
             return CreatedAtAction(nameof(GetBookById), new {Id = bookReadDto.Id},bookReadDto);
         }
         
-        //Patch api/book/{id}
-        // [HttpPatch("{id}")]
-        // public async Task<IActionResult> SetBookImage(int id, IFormFile file)
-        // {
-        //     var book = _bookRepo.GetBookById(id);
-        //     if (book == null || file == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     var oldFile = book.CoverImage;
-        //     if (oldFile != null)
-        //     {
-        //         Helpers.FileStorage.RmFileIfExists(oldFile);
-        //     }
-        //
-        //     var name = await Helpers.FileStorage.StoreImage(file);
-        //
-        //     book.CoverImage = name;
-        //     _bookRepo.SaveChanges();
-        //
-        //     return Ok();
-        // }
-        
         //DELETE api/book
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            if (await _bookService.BookExists(id))
+            if (!await _bookService.BookExists(id))
             {
                 return NotFound("Unknown book id.");
             }

@@ -53,8 +53,7 @@ namespace NoldusApi.Services
             
             if (book.CoverImage != null)
             {
-                // TODO: Delete image
-                throw new NotImplementedException();
+                Helpers.FileStorage.RmFileIfExists(book.CoverImage);
             }
             
             
