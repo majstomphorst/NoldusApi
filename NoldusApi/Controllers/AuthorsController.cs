@@ -30,7 +30,7 @@ namespace NoldusApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<AuthorReadDto>> GetAuthors()
         {
-            var authors = _repo.GetAllAuthors();
+            var authors = _authorService.GetAllAuthors();
 
             return Ok(_mapper.Map<IEnumerable<AuthorReadDto>>(authors));
         }

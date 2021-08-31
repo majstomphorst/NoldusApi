@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NoldusApi.DataAccess;
 using NoldusApi.Models;
 
@@ -15,7 +17,12 @@ namespace NoldusApi.Services
             _bookRepo = bookRepo;
             _authorRepo = authorRepo;
         }
-        
+
+        public IEnumerable<Author> GetAllAuthors()
+        {
+            return _authorRepo.GetAllAuthors();
+        }
+
         public void CreateAuthors(IEnumerable<Author> authors)
         {
             foreach (var author in authors)
