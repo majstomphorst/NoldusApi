@@ -14,13 +14,11 @@ namespace NoldusApi.Controllers
     [Route("api/[controller]")]
     public class AuthorController : ControllerBase
     {
-        private readonly IAuthorRepo _repo;
         private readonly IMapper _mapper;
         private readonly AuthorService _authorService;
 
-        public AuthorController(IAuthorRepo repo, AuthorService authorService, IMapper mapper)
+        public AuthorController(AuthorService authorService, IMapper mapper)
         {
-            _repo = repo;
             _mapper = mapper;
             _authorService = authorService;
         }
