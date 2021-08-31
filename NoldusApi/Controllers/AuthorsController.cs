@@ -7,6 +7,7 @@ using NoldusApi.DataAccess;
 using NoldusApi.Dtos;
 using NoldusApi.Dtos.AuthorDtos;
 using NoldusApi.Models;
+using NoldusApi.Services;
 
 namespace NoldusApi.Controllers
 {
@@ -16,9 +17,11 @@ namespace NoldusApi.Controllers
     {
         private readonly IAuthorRepo _repo;
         private readonly IMapper _mapper;
+        private readonly AuthorService _authorService;
 
-        public AuthorsController(IAuthorRepo repo, IMapper mapper)
+        public AuthorsController(AuthorService authorService, IAuthorRepo repo, IMapper mapper)
         {
+            _authorService = authorService;
             _repo = repo;
             _mapper = mapper;
         }
@@ -37,12 +40,18 @@ namespace NoldusApi.Controllers
         public ActionResult<IEnumerable<AuthorReadDto>> PostAuthors(IEnumerable<AuthorWriteDto> authorsDto)
         {
             var authors = _mapper.Map<IEnumerable<Author>>(authorsDto);
-
-            foreach (var author in authors)
+            if (!authors.Any())
             {
-                _repo.CreateAuthor(author);
+                return BadRequest();
             }
-            _repo.SaveChanges();
+
+            if (!_authorService.validateAuthors(authors))
+            {
+                return BadRequest();
+            }
+            
+            _authorService.CreateAuthors(authors);
+
             
             var authorsReadDto = _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
             string location = $"{Request.Scheme}://{Request.Host.Value}/{Request.Path}";

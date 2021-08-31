@@ -57,6 +57,7 @@ namespace NoldusApi
             services.AddScoped<IAuthorRepo, AuthorRepo>();
             services.AddScoped<IBookRepo, BookRepo>();
             services.AddScoped<BookService>();
+            services.AddScoped<AuthorService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();

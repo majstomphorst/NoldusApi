@@ -71,6 +71,5 @@ namespace NoldusApi.Services
                 return true;
             });
         }
-        
     }
 }
