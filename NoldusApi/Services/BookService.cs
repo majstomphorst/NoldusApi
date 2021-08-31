@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using NoldusApi.DataAccess;
 using NoldusApi.Dtos.AuthorDtos;
 using NoldusApi.Dtos.BookDtos;
@@ -74,11 +75,11 @@ namespace NoldusApi.Services
             return _authorRepo.GetAuthorById(id);
         }
 
-        public async void CreateBook(Book book, BookWriteDto book2) // BAD!!!!!!!
+        public async void CreateBook(Book book, IFormFile file) // BAD!!!!!!!
         {
-            if (book.CoverImage != null)
+            if (file != null)
             {
-                var name = await Helpers.FileStorage.StoreImage(book2.CoverImage);
+                var name = await Helpers.FileStorage.StoreImage(file);
                 book.CoverImage = name;
             }
 

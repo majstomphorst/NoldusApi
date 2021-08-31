@@ -26,7 +26,7 @@ namespace NoldusApi.Controllers
         
         //GET api/book/{id}
         [HttpGet("{id}", Name="GetBookById")]
-        public async  Task<ActionResult<BookReadDto>> GetBookById(int id, bool includeBook=false)
+        public async Task<ActionResult<BookReadDto>> GetBookById(int id, bool includeBook=false)
         {
             var book = await _bookService.GetBookById(id, includeBook);
             
@@ -49,7 +49,7 @@ namespace NoldusApi.Controllers
                 return BadRequest("no author found");
             }
 
-            _bookService.CreateBook(book, bookDto); //// BAD!
+            _bookService.CreateBook(book, bookDto.CoverImage); //// BAD!
 
             var bookReadDto = _mapper.Map<BookReadDto>(book);
             return CreatedAtAction(nameof(GetBookById), new {Id = bookReadDto.Id},bookReadDto);
