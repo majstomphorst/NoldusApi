@@ -39,6 +39,19 @@ namespace NoldusApi.Services
             return validatedBooks;
         }
 
+        public async Task<bool> BookExists(int id)
+        {
+            var book = _bookRepo.GetBookById(id);
+            return book != null;
+        }
+
+        public async Task DeleteBook(int id)
+        {
+            var book = _bookRepo.GetBookById(id);
+            _bookRepo.DeleteBook(book);
+            _bookRepo.SaveChanges();
+        }
+
         public bool AllBooksHaveAuthor(IEnumerable<Book> books)
         {
             return books.All(b => _authorRepo.GetAuthorById(b.AuthorId) != null);

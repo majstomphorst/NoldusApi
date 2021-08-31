@@ -85,15 +85,15 @@ namespace NoldusApi.Controllers
         
         //DELETE api/book
         [HttpDelete("{id}")]
-        public IActionResult DeleteBook(int id)
+        public async Task<IActionResult> DeleteBook(int id)
         {
-            var bookDb = _bookRepo.GetBookById(id);
-            if (bookDb == null)
+            if (await _bookService.BookExists(id))
             {
-                return NotFound();
+                return NotFound("Unknown book id.");
             }
-            _bookRepo.DeleteBook(bookDb);
-            _bookRepo.SaveChanges();
+
+            await _bookService.DeleteBook(id);
+            
             return NoContent();
         }
     } 
