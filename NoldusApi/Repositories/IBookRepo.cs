@@ -7,6 +7,7 @@ namespace NoldusApi.DataAccess
     {
         
         IEnumerable<Book> GetAllBooks();
+        IEnumerable<Book> GetAllBooksWithAuthor();
         
         Book GetBookById(int id);
         

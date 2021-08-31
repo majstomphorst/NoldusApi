@@ -30,6 +30,7 @@ namespace NoldusApi.Controllers
         public ActionResult <AuthorReadDto> GetAuthorById(int id, bool withBooks=false)
         {
             Author author = withBooks ? _repo.GetAuthorByIdWithFirstRelation(id) : _repo.GetAuthorById(id);
+            
             if (author == null)
             {
                 return NotFound();

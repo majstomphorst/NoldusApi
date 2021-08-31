@@ -24,17 +24,7 @@ namespace NoldusApi.DataAccess
         public IEnumerable<Book> GetAllBooksWithAuthor()
         {
             var books = _context.Book.Include(x => x.Author).ToList();
-
-            // this also does not belong there right?
-            return books.Where(book =>
-            {
-                if (book.Author.Pseudonym.ToLower() is "drokkattta" or "grakchawwaa" && 
-                    book.Release < DateTime.Now.AddMonths(-24))
-                {
-                    return false;
-                }
-                return true;
-            });
+            return books;
         }
 
 

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NoldusApi.DataAccess;
 using NoldusApi.Dtos;
 using NoldusApi.Dtos.BookDtos;
 using NoldusApi.Models;
+using NoldusApi.Services;
 
 namespace NoldusApi.Controllers
 {
@@ -16,20 +18,23 @@ namespace NoldusApi.Controllers
         private readonly IBookRepo _bookRepo;
         private readonly IAuthorRepo _authorRepo;
         private readonly IMapper _mapper;
+        private readonly BookService _bookService;
 
-        public BooksController(IBookRepo bookRepo, IAuthorRepo authorRepo, IMapper mapper)
+        public BooksController(IBookRepo bookRepo, IAuthorRepo authorRepo, BookService service, IMapper mapper)
         {
             _bookRepo = bookRepo;
             _authorRepo = authorRepo;
+            _bookService = service;
             _mapper = mapper;
         }
         
         //GET api/books
         [HttpGet]
-        public ActionResult<IEnumerable<BookReadDto>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetBooks()
         {
-            var books = _bookRepo.GetAllBooks();
-
+            var books =  await _bookService.GetAllBooks();
+            
+            // TODO: mapping in service?
             return Ok(_mapper.Map<IEnumerable<BookReadDto>>(books));
         }
         
