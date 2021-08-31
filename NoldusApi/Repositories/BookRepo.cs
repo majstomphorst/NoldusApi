@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NoldusApi.Models;
 
@@ -23,7 +24,13 @@ namespace NoldusApi.DataAccess
 
         public IEnumerable<Book> GetAllBooksWithAuthor()
         {
-            var books = _context.Book.Include(x => x.AuthorId).ToList();
+            var books = _context.Book.ToList();
+            foreach (var book in books)
+            {
+                var author = _context.Authors.First(x => x.Id == book.AuthorId);
+                book.Author = author;
+            }
+
             return books;
         }
 
@@ -36,10 +43,9 @@ namespace NoldusApi.DataAccess
 
         public Book GetBookByIdWithFirstRelation(int id)
         {
-            var book = _context.Book
-                .Include(x => x.AuthorId)
-                .FirstOrDefault(x => x.Id == id);
-
+            var book = _context.Book.First(x => x.Id == id);
+            var author = _context.Authors.First(x => x.Id == book.AuthorId);
+            book.Author = author;
             return book;
         }
 
