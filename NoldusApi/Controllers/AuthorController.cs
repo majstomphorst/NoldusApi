@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
@@ -9,6 +6,7 @@ using NoldusApi.DataAccess;
 using NoldusApi.Dtos;
 using NoldusApi.Dtos.AuthorDtos;
 using NoldusApi.Models;
+using NoldusApi.Services;
 
 namespace NoldusApi.Controllers
 {
@@ -18,19 +16,20 @@ namespace NoldusApi.Controllers
     {
         private readonly IAuthorRepo _repo;
         private readonly IMapper _mapper;
+        private readonly AuthorService _authorService;
 
-        public AuthorController(IAuthorRepo repo, IMapper mapper)
+        public AuthorController(IAuthorRepo repo, AuthorService authorService, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _authorService = authorService;
         }
 
         //GET api/author/{id}
         [HttpGet("{id}", Name="GetAuthorById")]
-        public ActionResult <AuthorReadDto> GetAuthorById(int id, bool withBooks=false)
+        public async Task<ActionResult<AuthorReadDto>> GetAuthorById(int id, bool withBooks=false)
         {
-            Author author = withBooks ? _repo.GetAuthorByIdWithFirstRelation(id) : _repo.GetAuthorById(id);
-            
+            var author = await _authorService.GetAuthorById(id, withBooks);
             if (author == null)
             {
                 return NotFound();
@@ -43,72 +42,71 @@ namespace NoldusApi.Controllers
         [HttpPost]
         public ActionResult<AuthorReadDto> PostAuthor(AuthorWriteDto authorDto)
         {
-            // TODO: validation
-            var author = _mapper.Map<Author>(authorDto);   
+            var author = _mapper.Map<Author>(authorDto);
             
-            _repo.CreateAuthor(author);
-            _repo.SaveChanges();
-            
+            _authorService.CreateAuthor(author);
+
             var authorReadDto = _mapper.Map<AuthorReadDto>(author);
             return CreatedAtAction(nameof(GetAuthorById), new {Id = authorReadDto.Id},authorReadDto);
         }
         
-        //PUT api/author/{id}
-        [HttpPut("{id}")]
-        public ActionResult PutAuthor(int id, AuthorUpdateDto authorDto)
-        {
-            var authorDb = _repo.GetAuthorById(id);
-            if (authorDb == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(authorDto, authorDb);
-            _repo.SaveChanges();
-
-            return NoContent();
-        }
+        // //PUT api/author/{id}
+        // [HttpPut("{id}")]
+        // public ActionResult PutAuthor(int id, AuthorUpdateDto authorDto)
+        // {
+        //     var authorDb = _repo.GetAuthorById(id);
+        //     if (authorDb == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     _mapper.Map(authorDto, authorDb);
+        //     _repo.SaveChanges();
+        //
+        //     return NoContent();
+        // }
+        //
+        // //PATCH api/author/{id}
+        // [HttpPatch("{id}")]
+        // public ActionResult PatchAuthor(int id, JsonPatchDocument<AuthorUpdateDto> patchDoc)
+        // {
+        //     var authorDb = _repo.GetAuthorById(id);
+        //     if (authorDb == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     var authorPatch = _mapper.Map<AuthorUpdateDto>(authorDb);
+        //     patchDoc.ApplyTo(authorPatch, ModelState);
+        //     if (TryValidateModel(authorPatch))
+        //     {
+        //         return ValidationProblem(ModelState);
+        //     }
+        //
+        //     _mapper.Map(authorPatch, authorDb);
+        //     _repo.SaveChanges();
+        //     
+        //     return NoContent();
+        // }
         
-        //PATCH api/author/{id}
-        [HttpPatch("{id}")]
-        public ActionResult PatchAuthor(int id, JsonPatchDocument<AuthorUpdateDto> patchDoc)
-        {
-            var authorDb = _repo.GetAuthorById(id);
-            if (authorDb == null)
-            {
-                return NotFound();
-            }
-
-            var authorPatch = _mapper.Map<AuthorUpdateDto>(authorDb);
-            patchDoc.ApplyTo(authorPatch, ModelState);
-            if (TryValidateModel(authorPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(authorPatch, authorDb);
-            _repo.SaveChanges();
-            
-            return NoContent();
-        }
         
         //DELETE api/author/{id}
         [HttpDelete("{id}")]
-        public IActionResult DeleteAuthor(int id)
+        public async Task<IActionResult> DeleteAuthor(int id)
         {
-            var authorDb = _repo.GetAuthorByIdWithFirstRelation(id);
-            if (authorDb == null)
+            var author = await _authorService.GetAuthorById(id, true);
+            if (author == null)
             {
                 return NotFound();
             }
 
-            if (authorDb.Books.Count > 0)
+            if (!_authorService.AuthorCanBeRemoved(author))
             {
                 return BadRequest();
             }
 
-            _repo.DeleteAuthor(authorDb);
-            _repo.SaveChanges();
+            _authorService.DeleteAuthor(author);
+            
             return NoContent();
         }   
     }

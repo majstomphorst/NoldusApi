@@ -23,6 +23,12 @@ namespace NoldusApi.Services
             return _authorRepo.GetAllAuthors();
         }
 
+        public void CreateAuthor(Author author)
+        {
+            _authorRepo.CreateAuthor(author);
+            _authorRepo.SaveChanges();
+        }
+
         public void CreateAuthors(IEnumerable<Author> authors)
         {
             foreach (var author in authors)
@@ -32,6 +38,21 @@ namespace NoldusApi.Services
             _bookRepo.SaveChanges();
         }
 
+        public async Task<Author> GetAuthorById(int id, bool includeAuthor = false)
+        {
+            Author author = includeAuthor ? _authorRepo.GetAuthorByIdWithFirstRelation(id) : _authorRepo.GetAuthorById(id);
+            return author;
+        }
+
+        public bool AuthorCanBeRemoved(Author author) => author.Books.Any();
+
+
+        public void DeleteAuthor(Author author)
+        { 
+            _authorRepo.DeleteAuthor(author);
+            _authorRepo.SaveChanges();
+        }
+        
         public bool validAuthors(IEnumerable<Author> authors)
         {
             return !authors.Any(x => x.FirstName.ToLower() == "dark" && x.LastName.ToLower() == "father");
