@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using NoldusApi.DataAccess;
+using NoldusApi.Services;
 
 
 namespace NoldusApi
@@ -55,6 +56,7 @@ namespace NoldusApi
             
             services.AddScoped<IAuthorRepo, AuthorRepo>();
             services.AddScoped<IBookRepo, BookRepo>();
+            services.AddScoped<BookService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();

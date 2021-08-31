@@ -30,7 +30,7 @@ namespace TestNoldusApi.UnitTests
 
             _authorRepo = new AuthorRepo(_context);
             _bookRepo = new BookRepo(_context);
-            _service = new BookService(_bookRepo);
+            _service = new BookService(_bookRepo, _authorRepo);
         }
 
         #region Init
@@ -111,8 +111,7 @@ namespace TestNoldusApi.UnitTests
             Assert.Equal(GetSeedingBooks().Count(),books.Count());
             
         }
-
-
+        
         [Fact]
         public void CheckForAuthorPseudonym_drokkattta_Test()
         {
@@ -144,6 +143,63 @@ namespace TestNoldusApi.UnitTests
             var dates = result.Where(x => x.Author.Pseudonym == "drokkattta").Select(x => x.Release);
             var all = dates.All(x => x > DateTime.Today.AddMonths(-24));
             Assert.True(all);
+        }
+
+        [Fact]
+        public async void AllBooksHaveAuthor_True_Test()
+        {
+            var author1 = new Author
+            {
+                Id = 3, FirstName = "Klaas", LastName = "De Typemachine", Pseudonym = "drokkattta",
+            };
+            
+            var book1 = new Book
+            {
+                Id = 1, Title = "title 1", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-25),
+                Price = 0, AuthorId = 3, Author = author1
+            };
+            var book2 = new Book
+            {
+                Id = 2, Title = "title 2", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-23),
+                Price = 0, AuthorId = 3, Author = author1
+            };
+            var book3 = new Book
+            {
+                Id = 2, Title = "title 3", Release = DateTime.Now.AddMonths(-24),
+                AuthorId = 3, Author = author1
+            };
+            
+            Assert.True(_service.AllBooksHaveAuthor(new List<Book>(){book1,book2,book3}));
+        }
+        
+        [Fact]
+        public async void AllBooksHaveAuthor_False_Test()
+        {
+            var author1 = new Author
+            {
+                Id = 3, FirstName = "Klaas", LastName = "De Typemachine", Pseudonym = "drokkattta",
+            };
+            
+            var book1 = new Book
+            {
+                Id = 1, Title = "title 1", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-25),
+                Price = 0, AuthorId = 3, Author = author1
+            };
+            var book2 = new Book
+            {
+                Id = 2, Title = "title 2", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-23),
+                Price = 0, AuthorId = 3, Author = author1
+            };
+            var book3 = new Book
+            {
+                Id = 2, Title = "title 2", Description = "", CoverImage = null, Release = DateTime.Now.AddMonths(-23),
+                Price = 0, AuthorId = 5, Author = author1
+            };
+            var book4 = new Book
+            {
+                Id = 2, Title = "title 3", Release = DateTime.Now.AddMonths(-24)
+            };
+            Assert.False(_service.AllBooksHaveAuthor(new List<Book>(){book1,book2,book3,book4}));
         }
 
         [Fact]

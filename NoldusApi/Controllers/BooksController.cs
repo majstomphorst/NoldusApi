@@ -15,15 +15,11 @@ namespace NoldusApi.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly IBookRepo _bookRepo;
-        private readonly IAuthorRepo _authorRepo;
         private readonly IMapper _mapper;
         private readonly BookService _bookService;
 
-        public BooksController(IBookRepo bookRepo, IAuthorRepo authorRepo, BookService service, IMapper mapper)
+        public BooksController(BookService service, IMapper mapper)
         {
-            _bookRepo = bookRepo;
-            _authorRepo = authorRepo;
             _bookService = service;
             _mapper = mapper;
         }
@@ -43,8 +39,12 @@ namespace NoldusApi.Controllers
         public ActionResult<IEnumerable<BookReadDto>> PostBooks(IEnumerable<BookWriteDto> authorsDto)
         {
             var books = _mapper.Map<IEnumerable<Book>>(authorsDto);
-            
-            var allHaveAuthor = books.All(b => _bookService.GetAuthorById(b.AuthorId) != null);
+            if (!books.Any())
+            {
+                return BadRequest();
+            }
+
+            var allHaveAuthor = _bookService.AllBooksHaveAuthor(books);
             if (!allHaveAuthor)
             {
                 return NotFound("One or more books do not have a valid author id");
@@ -53,9 +53,10 @@ namespace NoldusApi.Controllers
             _bookService.CreateBooks(books);
 
             var booksReadDto = _mapper.Map<IEnumerable<BookReadDto>>(books);
-            string location = $"{Request.Scheme}://{Request.Host.Value}"; //  "/{Request.Path}";
-            var response = new CreatedAtActionResult(location,"/author",  "", booksReadDto);
-            return response;
+            string location = $"{Request.Scheme}://{Request.Host.Value}";
+            return Created(location  + "api/books",booksReadDto);
+            // var response = new CreatedAtActionResult(location,"/author",  "", booksReadDto);
+            // return response;
         }
     }
 }

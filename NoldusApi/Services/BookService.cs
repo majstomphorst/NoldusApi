@@ -33,6 +33,11 @@ namespace NoldusApi.Services
             return validatedBooks;
         }
 
+        public bool AllBooksHaveAuthor(IEnumerable<Book> books)
+        {
+            return books.All(b => _authorRepo.GetAuthorById(b.AuthorId) != null);
+        }
+        
         public Author GetAuthorById(int id)
         {
             return _authorRepo.GetAuthorById(id);
@@ -53,7 +58,6 @@ namespace NoldusApi.Services
             
             return pseudonymChecked;
         }
-        
 
         public static IEnumerable<Book> CheckForAuthorPseudonym(IEnumerable<Book> books)
         {
