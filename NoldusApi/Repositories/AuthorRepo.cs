@@ -30,11 +30,6 @@ namespace NoldusApi.DataAccess
         public Author GetAuthorById(int id)
         {
             var author = _context.Authors.FirstOrDefault(x => x.Id == id);
-            if (author == null)
-            {
-                return author;
-            }
-            
             return author;
         }
 
@@ -48,16 +43,6 @@ namespace NoldusApi.DataAccess
 
         public void CreateAuthor(Author author)
         {
-            if (author == null)
-            {
-                throw new ArgumentNullException(nameof(author));
-            }
-
-            if (author.FirstName == "Dark" && author.LastName == "Father")
-            {
-                return;
-            }
-
             _context.Authors.Add(author);
         }
 

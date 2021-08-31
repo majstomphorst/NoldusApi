@@ -26,6 +26,5 @@ namespace NoldusApi.Models
         public decimal Price { get; set; }
         
         public int AuthorId { get; set; }
-        public Author Author { get; set; }
     }
 }

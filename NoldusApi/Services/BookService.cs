@@ -24,7 +24,10 @@ namespace NoldusApi.Services
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
             var books = _bookRepo.GetAllBooks();
-            return books;
+
+            var filteredBooks = this.FilteredBooks(books).ToList();
+            
+            return filteredBooks;
         }
 
         public async Task<Book> GetBookById(int id, bool includeAuthor = false)
@@ -37,7 +40,7 @@ namespace NoldusApi.Services
         {
             var books = _bookRepo.GetAllBooksWithAuthor();
 
-            var validatedBooks = ValidateBooks(books);
+            var validatedBooks = FilteredBooks(books);
             return validatedBooks;
         }
 
@@ -92,18 +95,21 @@ namespace NoldusApi.Services
             _bookRepo.SaveChanges();
         }
 
-        private IEnumerable<Book> ValidateBooks(IEnumerable<Book> books)
+        private IEnumerable<Book>FilteredBooks (IEnumerable<Book> books)
         {
             var pseudonymChecked = CheckForAuthorPseudonym(books);
             
             return pseudonymChecked;
         }
 
-        public static IEnumerable<Book> CheckForAuthorPseudonym(IEnumerable<Book> books)
+        public IEnumerable<Book> CheckForAuthorPseudonym(IEnumerable<Book> books)
         {
             return books.Where(book =>
             {
-                if (book.Author.Pseudonym.ToLower() is "drokkattta" or "grakchawwaa" && 
+                var author = _authorRepo.GetAuthorById(book.AuthorId);
+                
+                if (author.Pseudonym != null && 
+                    author.Pseudonym.ToLower() is "drokkattta" or "grakchawwaa" &&
                     book.Release < DateTime.Now.AddMonths(-24))
                 {
                     return false;

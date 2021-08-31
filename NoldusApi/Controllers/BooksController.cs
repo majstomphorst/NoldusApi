@@ -30,7 +30,6 @@ namespace NoldusApi.Controllers
         {
             var books =  await _bookService.GetAllBooks();
             
-            // TODO: mapping in service?
             return Ok(_mapper.Map<IEnumerable<BookReadDto>>(books));
         }
         

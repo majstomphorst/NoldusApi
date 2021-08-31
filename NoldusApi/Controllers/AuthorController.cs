@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
@@ -42,6 +43,11 @@ namespace NoldusApi.Controllers
         public ActionResult<AuthorReadDto> PostAuthor(AuthorWriteDto authorDto)
         {
             var author = _mapper.Map<Author>(authorDto);
+
+            if (!_authorService.validAuthors(new List<Author> {author}))
+            {
+                return BadRequest();
+            }
             
             _authorService.CreateAuthor(author);
 

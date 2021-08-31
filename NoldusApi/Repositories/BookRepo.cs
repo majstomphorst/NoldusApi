@@ -23,7 +23,7 @@ namespace NoldusApi.DataAccess
 
         public IEnumerable<Book> GetAllBooksWithAuthor()
         {
-            var books = _context.Book.Include(x => x.Author).ToList();
+            var books = _context.Book.Include(x => x.AuthorId).ToList();
             return books;
         }
 
@@ -37,7 +37,7 @@ namespace NoldusApi.DataAccess
         public Book GetBookByIdWithFirstRelation(int id)
         {
             var book = _context.Book
-                .Include(x => x.Author)
+                .Include(x => x.AuthorId)
                 .FirstOrDefault(x => x.Id == id);
 
             return book;
