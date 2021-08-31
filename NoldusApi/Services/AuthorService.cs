@@ -27,7 +27,7 @@ namespace NoldusApi.Services
 
         public bool validAuthors(IEnumerable<Author> authors)
         {
-            return authors.Any(x => x.FirstName.ToLower() != "dark" && x.LastName.ToLower() != "father");
+            return !authors.Any(x => x.FirstName.ToLower() == "dark" && x.LastName.ToLower() == "father");
         }
     }
 }

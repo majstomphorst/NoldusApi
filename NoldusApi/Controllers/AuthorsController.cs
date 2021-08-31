@@ -52,13 +52,9 @@ namespace NoldusApi.Controllers
             
             _authorService.CreateAuthors(authors);
 
-            
+
             var authorsReadDto = _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
-            string location = $"{Request.Scheme}://{Request.Host.Value}/{Request.Path}";
-            
-            var response = new CreatedAtActionResult("","author", "1", authorsReadDto);
-            return response;
-            // return Created(location, authorsReadDto);
+            return Created("",authorsReadDto);
         }
     }
 }
