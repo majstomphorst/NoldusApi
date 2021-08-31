@@ -49,6 +49,12 @@ namespace NoldusApi.Services
             return _authorRepo.GetAuthorById(id);
         }
 
+        public void CreateBook(Book book)
+        { 
+            _bookRepo.CreateBook(book);
+            _bookRepo.SaveChanges();
+        }
+
         public void CreateBooks(IEnumerable<Book> books)
         {
             foreach (var book in books)
@@ -76,6 +82,12 @@ namespace NoldusApi.Services
                 }
                 return true;
             });
+        }
+
+        public bool BookHasAuthor(Book book)
+        {
+            var author = _authorRepo.GetAuthorById(book.AuthorId);
+            return author != null;
         }
     }
 }
