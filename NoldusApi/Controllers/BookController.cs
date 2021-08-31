@@ -15,16 +15,12 @@ namespace NoldusApi.Controllers
     [Route("api/[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly IBookRepo _bookRepo;
-        private readonly IAuthorRepo _authorRepo;
         private readonly IMapper _mapper;
         private readonly BookService _bookService;
 
-        public BookController(BookService bookService, IBookRepo bookRepo, IAuthorRepo authorRepo, IMapper mapper)
+        public BookController(BookService bookService, IMapper mapper)
         {
             _bookService = bookService;
-            _bookRepo = bookRepo;
-            _authorRepo = authorRepo;
             _mapper = mapper;
         }
         
@@ -59,29 +55,29 @@ namespace NoldusApi.Controllers
             return CreatedAtAction(nameof(GetBookById), new {Id = bookReadDto.Id},bookReadDto);
         }
         
-        //POST api/book/{id}
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> SetBookImage(int id, IFormFile file)
-        {
-            var book = _bookRepo.GetBookById(id);
-            if (book == null || file == null)
-            {
-                return NotFound();
-            }
-
-            var oldFile = book.CoverImage;
-            if (oldFile != null)
-            {
-                Helpers.FileStorage.RmFileIfExists(oldFile);
-            }
-
-            var name = await Helpers.FileStorage.StoreImage(file);
-
-            book.CoverImage = name;
-            _bookRepo.SaveChanges();
-
-            return Ok();
-        }
+        //Patch api/book/{id}
+        // [HttpPatch("{id}")]
+        // public async Task<IActionResult> SetBookImage(int id, IFormFile file)
+        // {
+        //     var book = _bookRepo.GetBookById(id);
+        //     if (book == null || file == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     var oldFile = book.CoverImage;
+        //     if (oldFile != null)
+        //     {
+        //         Helpers.FileStorage.RmFileIfExists(oldFile);
+        //     }
+        //
+        //     var name = await Helpers.FileStorage.StoreImage(file);
+        //
+        //     book.CoverImage = name;
+        //     _bookRepo.SaveChanges();
+        //
+        //     return Ok();
+        // }
         
         //DELETE api/book
         [HttpDelete("{id}")]
@@ -93,7 +89,6 @@ namespace NoldusApi.Controllers
             }
 
             await _bookService.DeleteBook(id);
-            
             return NoContent();
         }
     } 
