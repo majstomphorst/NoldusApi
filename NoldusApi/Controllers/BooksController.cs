@@ -44,18 +44,14 @@ namespace NoldusApi.Controllers
         {
             var books = _mapper.Map<IEnumerable<Book>>(authorsDto);
             
-            var allHaveAuthor = books.All(b => _authorRepo.GetAuthorById(b.AuthorId) != null);
+            var allHaveAuthor = books.All(b => _bookService.GetAuthorById(b.AuthorId) != null);
             if (!allHaveAuthor)
             {
-                return NotFound();
+                return NotFound("One or more books do not have a valid author id");
             }
-
-            foreach (var book in books)
-            {
-                _bookRepo.CreateBook(book);
-            }
-            _bookRepo.SaveChanges();
             
+            _bookService.CreateBooks(books);
+
             var booksReadDto = _mapper.Map<IEnumerable<BookReadDto>>(books);
             string location = $"{Request.Scheme}://{Request.Host.Value}"; //  "/{Request.Path}";
             var response = new CreatedAtActionResult(location,"/author",  "", booksReadDto);

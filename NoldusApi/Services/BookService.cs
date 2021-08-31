@@ -10,36 +10,52 @@ namespace NoldusApi.Services
 {
     public class BookService
     {
-        private readonly IBookRepo _repo;
+        private readonly IBookRepo _bookRepo;
+        private readonly IAuthorRepo _authorRepo;
 
-        public BookService(IBookRepo repo)
+        public BookService(IBookRepo bookRepo, IAuthorRepo authorRepo)
         {
-            _repo = repo;
+            _bookRepo = bookRepo;
+            _authorRepo = authorRepo;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            var books = _repo.GetAllBooks();
+            var books = _bookRepo.GetAllBooks();
             return books;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooksWithAuthor()
         {
-            var books = _repo.GetAllBooksWithAuthor();
+            var books = _bookRepo.GetAllBooksWithAuthor();
 
             var validatedBooks = ValidateBooks(books);
             return validatedBooks;
         }
 
+        public Author GetAuthorById(int id)
+        {
+            return _authorRepo.GetAuthorById(id);
+        }
+
+        public void CreateBooks(IEnumerable<Book> books)
+        {
+            foreach (var book in books)
+            {
+                _bookRepo.CreateBook(book);
+            }
+            _bookRepo.SaveChanges();
+        }
+
         private IEnumerable<Book> ValidateBooks(IEnumerable<Book> books)
         {
             var pseudonymChecked = CheckForAuthorPseudonym(books);
-
-
+            
             return pseudonymChecked;
         }
+        
 
-        private IEnumerable<Book> CheckForAuthorPseudonym(IEnumerable<Book> books)
+        public static IEnumerable<Book> CheckForAuthorPseudonym(IEnumerable<Book> books)
         {
             return books.Where(book =>
             {

@@ -1,22 +1,14 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/Users/maj/Library/Caches/JetBrains/Rider2021.1/resharper-host/temp/Rider/vAny/CoverageData/_NoldusApi.-108920040/Snapshot/snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2490f2e9_002D51c7_002D455c_002Da7db_002D94aba937dc6d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllBooks_WithAuthor_Drokkatta_test #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0f16e22d_002Dba88_002D4223_002Dbda7_002D3efd94820b34/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CheckForAuthorPseudonym_drokkattta_Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.bookRepoTests.GetAllBooks_WithAuthor_Drokkatta_test&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.BookServicesTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.BookServicesTests.CheckForAuthorPseudonym_drokkattta_Test&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=34a0256b_002Da355_002D4758_002D96c9_002Dfcf90c6cc158/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;TestNoldusApi&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Project Location="/Users/maj/code/NoldusApi/TestNoldusApi" Presentation="&amp;lt;TestNoldusApi&amp;gt;" /&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1654a144_002Db096_002D4352_002Da564_002De9b847351dda/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=913043e9_002Da052_002D48ba_002Daafe_002D223526dd59d8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllBooks_WithAuthor_Drokkatta_test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.bookRepoTests.GetAllBooks_WithAuthor_Drokkatta_test&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f551cc39_002D3084_002D45ab_002D9a13_002De66bd41f30dc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllAuthors" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.AuthorsControllerTests&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.AuthorRepoTests.GetAllTest&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	
+	
+	
+	</wpf:ResourceDictionary>
