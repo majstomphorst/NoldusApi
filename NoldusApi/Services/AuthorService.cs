@@ -25,7 +25,7 @@ namespace NoldusApi.Services
             _bookRepo.SaveChanges();
         }
 
-        public bool validateAuthors(IEnumerable<Author> authors)
+        public bool validAuthors(IEnumerable<Author> authors)
         {
             return authors.Any(x => x.FirstName.ToLower() != "dark" && x.LastName.ToLower() != "father");
         }

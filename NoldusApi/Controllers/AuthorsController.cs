@@ -45,7 +45,7 @@ namespace NoldusApi.Controllers
                 return BadRequest();
             }
 
-            if (!_authorService.validateAuthors(authors))
+            if (!_authorService.validAuthors(authors))
             {
                 return BadRequest();
             }

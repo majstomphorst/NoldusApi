@@ -5,6 +5,8 @@
     &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.BookServicesTests.CheckForAuthorPseudonym_drokkattta_Test&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.BookServicesTests.AllBooksHaveAuthorTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.BookServicesTests.AllBooksHaveAuthor_False_Test&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.AuthorServiceTest.validateAuthorsTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A8FA1D56-0346-4316-97EE-27180F782ED1::net5.0::TestNoldusApi.UnitTests.AuthorServiceTest.validAuthoers_good_Test&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1654a144_002Db096_002D4352_002Da564_002De9b847351dda/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
