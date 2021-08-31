@@ -36,6 +36,7 @@ namespace NoldusApi.Controllers
             return Ok(_mapper.Map<AuthorReadDto>(author));
         }
         
+        
         //POST api/author
         [HttpPost]
         public ActionResult<AuthorReadDto> PostAuthor(AuthorWriteDto authorDto)

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NoldusApi.DataAccess;
+using NoldusApi.Dtos.AuthorDtos;
+using NoldusApi.Dtos.BookDtos;
 using NoldusApi.Models;
 
 namespace NoldusApi.Services
@@ -48,6 +50,14 @@ namespace NoldusApi.Services
         public async Task DeleteBook(int id)
         {
             var book = _bookRepo.GetBookById(id);
+            
+            if (book.CoverImage != null)
+            {
+                // TODO: Delete image
+                throw new NotImplementedException();
+            }
+            
+            
             _bookRepo.DeleteBook(book);
             _bookRepo.SaveChanges();
         }
@@ -62,8 +72,14 @@ namespace NoldusApi.Services
             return _authorRepo.GetAuthorById(id);
         }
 
-        public void CreateBook(Book book)
-        { 
+        public async void CreateBook(Book book, BookWriteDto book2) // BAD!!!!!!!
+        {
+            if (book.CoverImage != null)
+            {
+                var name = await Helpers.FileStorage.StoreImage(book2.CoverImage);
+                book.CoverImage = name;
+            }
+
             _bookRepo.CreateBook(book);
             _bookRepo.SaveChanges();
         }

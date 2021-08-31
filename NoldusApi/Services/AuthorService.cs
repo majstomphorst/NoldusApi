@@ -37,7 +37,6 @@ namespace NoldusApi.Services
             }
             _bookRepo.SaveChanges();
         }
-
         public async Task<Author> GetAuthorById(int id, bool includeAuthor = false)
         {
             Author author = includeAuthor ? _authorRepo.GetAuthorByIdWithFirstRelation(id) : _authorRepo.GetAuthorById(id);

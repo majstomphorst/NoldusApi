@@ -40,16 +40,16 @@ namespace NoldusApi.Controllers
         
         //POST api/book
         [HttpPost]
-        public ActionResult<AuthorReadDto> PostBook(BookWriteDto bookDto)
+        public ActionResult<AuthorReadDto> PostBook([FromForm]BookWriteDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
-            
+
             if (!_bookService.BookHasAuthor(book)) 
             {
                 return BadRequest("no author found");
             }
-            
-            _bookService.CreateBook(book);
+
+            _bookService.CreateBook(book, bookDto); //// BAD!
 
             var bookReadDto = _mapper.Map<BookReadDto>(book);
             return CreatedAtAction(nameof(GetBookById), new {Id = bookReadDto.Id},bookReadDto);

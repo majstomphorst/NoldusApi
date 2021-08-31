@@ -12,7 +12,7 @@ namespace NoldusApi.Dtos.BookDtos
         
         public string Description { get; set; }
         
-        // public IFormFile CoverImage { get; set; }
+        public IFormFile CoverImage { get; set; }
         
         [Required]
         public DateTime Release { get; set; }
